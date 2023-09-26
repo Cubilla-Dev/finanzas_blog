@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -10,7 +11,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }
@@ -23,11 +24,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String title = '';
-  String body = '';
   List<MyData> data = [];
-  // MyHomePage({required this.data});
-  // final List<Map<String, dynamic>> jsonData = [];
 
 //obtenemos el token que esta guardado adentro de celular
   Future<String?> obtenToken() async {
@@ -40,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //hacemos la peticion al back
   Future<void> fetchData() async {
     final response =
-        await http.get(Uri.http('192.168.0.11:3000', '/smallblog'));
+        await http.get(Uri.http('${dotenv.get('IP_BACK')}', '/smallblog'));
 
     if (response.statusCode == 200) {
       final List<dynamic> responseData = json.decode(response.body);
@@ -65,15 +62,12 @@ class _MyHomePageState extends State<MyHomePage> {
     //para obtener el width de la pantalla
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    // void llamada() {
-    //   context.go('/blog');
-    // }
 
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Ejemplo de Tarjeta '),
-        ),
+        // appBar: AppBar(
+        //   title: Text('Ejemplo de Tarjeta '),
+        // ),
         body: Container(
           width: screenWidth,
           height: screenHeight,
@@ -83,9 +77,9 @@ class _MyHomePageState extends State<MyHomePage> {
               itemBuilder: (BuildContext context, index) {
                 return GestureDetector(
                   onTap: () {
-                    // Navigator.of(context)
-                    //     .pushNamedAndRemoveUntil('/blog', (route) => false);
-                    context.goNamed('blog', pathParameters: {'id': '10'});
+                    //forma de pasar parametros
+                    final id = data[index].blog_id;
+                    context.goNamed('blog', pathParameters: {'id': '$id'});
                   },
                   child: Card(
                     child: ListTile(
@@ -106,13 +100,12 @@ class _MyHomePageState extends State<MyHomePage> {
 class MyData {
   final String title;
   final String body;
+  final int blog_id;
 
-  MyData({required this.title, required this.body});
+  MyData({required this.title, required this.body, required this.blog_id});
 
   factory MyData.fromJson(Map<String, dynamic> json) {
     return MyData(
-      title: json['title'],
-      body: json['body'],
-    );
+        title: json['title'], body: json['body'], blog_id: json['blog_id']);
   }
 }
