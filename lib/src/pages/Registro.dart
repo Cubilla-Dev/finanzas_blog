@@ -27,7 +27,7 @@ class _RegistroState extends State<Registro> {
             child: Column(
               children: [
                 //para llamar los get
-                Text(context.watch<CounterProvider>().counter.toString()),
+                // Text(context.watch<CounterProvider>().counter.toString()),
                 TextFormField(
                   controller: nombreController,
                   keyboardType: TextInputType.text,
@@ -62,24 +62,22 @@ class _RegistroState extends State<Registro> {
                   },
                 ), // SwitchListTile.adaptive(value: false, onChanged: (bool? value) {}),
                 MaterialButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (formKey.currentState!.validate()) {
                       Map<String, dynamic> info = {
                         'name': nombreController.text,
                         'email': correoController.text,
                         'password': passController.text
                       };
-                    }
-                    void main() async {
-                      final apiUrl = '';
+                      const apiUrl = '192.168.0.11:3000';
                       try {
-                        final datos = await fetchData(apiUrl);
+                        final datos = await fetchData(apiUrl, info);
+                        print('los datos de la peticion son $datos');
                       } catch (error) {
-                        print('Hubo error en la peticion en registro');
+                        print('Hubo error en la peticion en registro $error');
                       }
                     }
 
-                    ;
                     //para llamar funciones
                     // context.read<CounterProvider>().increment();
                   },

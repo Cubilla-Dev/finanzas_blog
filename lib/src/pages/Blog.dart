@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_1/src/pages/button_opcion.dart';
 import 'package:http/http.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,9 +18,10 @@ class Blog extends StatelessWidget {
 }
 
 Widget cuerpo(BuildContext context, String? id) {
-  return Container(
-    child: Center(
-      child: Text('Mi blog cuerpo $id'),
+  return Scaffold(
+    body: Center(
+      child: Text('cuerpo'),
     ),
+    bottomNavigationBar: butt_opcion(),
   );
 }
