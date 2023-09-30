@@ -1,17 +1,18 @@
 // import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app_1/src/pages/menu.dart';
 import 'package:flutter_app_1/src/pages/navegacion.dart';
 import 'package:flutter_app_1/src/provider/counter.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:flutter_app_1/src/pages/Home.dart';
-import 'package:flutter_app_1/src/pages/Login.dart';
-import 'package:flutter_app_1/src/pages/Blog.dart';
-import 'package:flutter_app_1/src/pages/tabBar.dart';
+import 'package:flutter_app_1/src/pages/home.dart';
+import 'package:flutter_app_1/src/pages/login.dart';
+import 'package:flutter_app_1/src/pages/blog.dart';
+// import 'package:flutter_app_1/src/pages/tabBar.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart'; //el theme del proyecto
 // import 'package:flutter_app_1/src/widget/widgets.dart';
-import 'package:flutter_app_1/src/pages/Registro.dart';
+import 'package:flutter_app_1/src/pages/registro.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -59,11 +60,19 @@ class _MiAppState extends State<MiApp> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
+          appBar: AppBar(
+            title: Text('Finanzas'),
+          ),
+          drawer: Menu(),
           body: Column(
             children: [
-              const navegacion(),
+              //para mostrar la navegacion
+              // const Menu(),
               Expanded(
+                //para mostrar las rutas
                 child: MaterialApp.router(
+                  //para que n muestre el banner
+                  // debugShowCheckedModeBanner: false,
                   routerConfig: _router,
                 ),
               )
@@ -73,18 +82,11 @@ class _MiAppState extends State<MiApp> {
   }
 }
 
-
-
-
-
-
-  // final List<Widget> _pages = <Widget>[
-  //   LoginScreen(),
-  //   const Registro(),
-  //   const Home(),
-  // ];
-
-
+// final List<Widget> _pages = <Widget>[
+//   LoginScreen(),
+//   const Registro(),
+//   const Home(),
+// ];
 
 // body: Scaffold(
 //         appBar: AppBar(

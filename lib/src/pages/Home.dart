@@ -65,9 +65,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return MaterialApp(
       home: Scaffold(
-        // appBar: AppBar(
-        //   title: Text('Ejemplo de Tarjeta '),
-        // ),
         body: Container(
           width: screenWidth,
           height: screenHeight,
